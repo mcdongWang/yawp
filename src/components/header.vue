@@ -3,13 +3,25 @@
         <img src="../assets/img/logo.png" height="36" width="128" class="logo"></img>
         <ul class="path_list">
             <li class="path">OUR PROJECT</li>
-            <li class="path">ARTWORKS</li>
+            <li class="path" @click="go">ARTWORKS</li>
         </ul>
         <span class="login">登录</span>
     </div class="wrap">
 </template>
+<script>
+export default {
+  name: 'header',
+  data () {
+    return {}
+  },
+  methods: {
+    go () {
+        this.$router.push('/artworkslist')
+    }
+  }
+}
+</script>
 <style lang="less" scoped>
-
 .wrap{
     width: 100%;
     height: 80px;

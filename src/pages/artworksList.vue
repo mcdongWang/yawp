@@ -31,6 +31,7 @@ export default {
 .artworks-list{
     width: 1200px;
     margin: 20px auto 140px;
+    background-color: #f9f9f9;
 }
 .artwork-item{
     width: calc((100% - 120px) / 3);
