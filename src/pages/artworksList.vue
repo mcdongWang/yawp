@@ -1,12 +1,12 @@
 <template>
   <div class="artworks-list">
-    <div class="artwork-item" v-for="i in 5">
-        <img src="@/assets/logo.png" alt="" class="artwork-img">
+    <div class="artwork-item" v-for="i in 5" @click="gotoDetail()">
+        <img src="@/assets/listImg.png" alt="" class="artwork-img">
         <span class="artwork-titlebar">
-            <span class="artwork-name">aaa</span>
-            <span class="artwork-fee">$11</span>
+            <span class="artwork-name">那夜过后渐渐静止的风</span>
+            <span class="artwork-fee">￥1080</span>
         </span>
-        <span class="artwork-artist">bb</span>
+        <span class="artwork-artist">LU SHAN</span>
     </div>
   </div>
 </template>
@@ -16,6 +16,11 @@ export default {
   name: 'ArtworksList',
   data () {
     return {
+    }
+  },
+  methods: {
+    gotoDetail () {
+        this.$router.push({name: 'artworkDetail'})
     }
   }
 }
@@ -33,6 +38,7 @@ export default {
     margin-right: 60px;
     display: inline-block;
     color: #242424;
+    cursor: pointer;
     .artwork-img{
         width: 100%;
         height: 240px;
@@ -40,11 +46,21 @@ export default {
     .artwork-titlebar{
         margin-top: 22px;
         margin-bottom: 10px;
-        font-size: 22px;
         display: block;
+        font-size: 0;
+        .artwork-name{
+            display: inline-block;
+            font-size: 22px;
+            width: 80%;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+        }
         .artwork-fee{
             display: inline-block;
-            float: right;
+            width: 20%;
+            font-size: 22px;
+            text-align: right;
         }
     }
     .artwork-artist{
