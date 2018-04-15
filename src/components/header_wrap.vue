@@ -6,15 +6,29 @@
             <li class="path" @click="go">ARTWORKS</li>
         </ul>
         <span class="login">登录</span>
+        <dialog-wrap
+            :closeState="show_login"
+            @toggle="close">
+        </dialog-wrap>
     </div class="wrap">
 </template>
 <script>
+
+import dialogWrap from './dialog'
 export default {
-  name: 'headerWrap',
+  name: 'index',
   data () {
-    return {}
+    return {
+        show_login: true
+    }
+  },
+  components: {
+    dialogWrap
   },
   methods: {
+    close () {
+        this.show_login = false
+    },
     go () {
         this.$router.push('/artworkslist')
     }
