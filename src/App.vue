@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import headerWrap from './components/header'
-import footerWrap from './components/footer'
+import headerWrap from './components/header_wrap'
+import footerWrap from './components/footer_wrap'
 export default {
   name: 'App',
   components: {
