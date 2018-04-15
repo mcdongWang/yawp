@@ -4,7 +4,7 @@
         <img src="../assets/img/logo_black.png" class="logo" alt="">
         <p class="title">最酷的数字资产版权保护平台</p>
         <p class="sub_title">基于区块链技术提供最安全、简单的数字版权保护方式，保护创作者的根本利益，让数字内容可以安全传播与交易</p>
-        <div class="start_btn">LET'S STAR</div>
+        <div class="start_btn">LET'S START</div>
         <img class="down" src='../assets/img/down.png' alt="">
     </div>
     <div class="feture">
