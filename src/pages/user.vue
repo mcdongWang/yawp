@@ -4,7 +4,7 @@
             <img class="user_photo" src="../assets/listImg.png" alt="">
             <div class="user_name">LU SHAN</div>
             <div class="user_work_title">Digital artist</div>
-            <div class="user_upload_btn">上传作品</div>
+            <div class="user_upload_btn" @click="upload">上传作品</div>
         </div>
         <div class="user_nav">
             <div class="user_nav_item" :class="{'user_nav_selected' : $route.path == '/user/artlist'}" @click="go('artlist')">我的作品</div>
@@ -12,22 +12,39 @@
             <div class="user_nav_item" :class="{'user_nav_selected' : $route.path == '/user/selfcheck'}" @click="go('selfcheck')">原创性查询</div>
             <div class="user_nav_item" :class="{'user_nav_selected' : $route.path == '/user/linkcheck'}" @click="go('linkcheck')">区块链版权查询</div>
         </div>
+        <dialog-wrap
+            :closeState="show_upload"
+            @toggle="close">
+            <upload-wrap @cancle="close"></upload-wrap>
+        </dialog-wrap>
         <router-view></router-view>
     </div>
 </template>
 <script>
+import dialogWrap from '../components/dialog'
+import uploadWrap from './upload'
 export default {
   name: 'user',
   data: function () {
     return {
-
+        show_upload: false
     }
   },
   methods: {
     go (path) {
         this.$router.push(`/user/${path}`)
+    },
+    close () {
+        this.show_upload = false
+    },
+    upload () {
+        this.show_upload = true
     }
-  }
+  },
+  components: {
+    dialogWrap,
+    uploadWrap
+  },
 }
 </script>
 <style lang="less" scoped>

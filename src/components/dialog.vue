@@ -40,6 +40,7 @@ export default {
     position: fixed;
     width: 100%;
     height: 100%;
+    overflow-y: auto;
     background-color: #fff;
     .button{
         cursor: pointer;

@@ -2,8 +2,8 @@
     <div class="wrap">
         <img src="../assets/img/logo.png" height="36" width="128" class="logo"></img>
         <ul class="path_list">
-            <li class="path">OUR PROJECT</li>
-            <li class="path" @click="go">ARTWORKS</li>
+            <li class="path" @click="go('/')">OUR PROJECT</li>
+            <li class="path" @click="go('/artworkslist')">ARTWORKS</li>
         </ul>
         <span class="login" @click="login">登录</span>
         <dialog-wrap
@@ -35,8 +35,8 @@ export default {
     login () {
         this.show_login = true
     },
-    go () {
-        this.$router.push('/artworkslist')
+    go (path) {
+        this.$router.push(path)
     }
   }
 }

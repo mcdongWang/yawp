@@ -10,11 +10,19 @@
     </div>
 </template>
 <style lang="less" scoped>
+// input placeholder 颜色修改
+.placeholder(@rules) {
+    &::placeholder {
+        @rules();
+    }
+}
+
 .login_wrap{
     width: 560px;
     margin: 240px auto 0 auto;
     margin-top: calc(~'(100vh - 500px) / 2');
     text-align: center;
+    min-height: 500px;
     .login_logo{
         width: 290px;
         height: 80px;
@@ -41,6 +49,9 @@
         color: #242424;
     }
     input{
+        .placeholder({
+            color: #b9b9b9!important;
+        });
         -web-kit-appearance:none;
         -moz-appearance: none;
         appearance: none;
@@ -50,7 +61,7 @@
         margin-top: 20px;
         padding: 20px 30px;
         font-size: 22px;
-        color: #b9b9b9;
+        color: #242424;
         box-sizing: border-box;
         background-color: #f4f4f4;
     }
