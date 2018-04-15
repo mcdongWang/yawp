@@ -1,5 +1,5 @@
 <template>
-    <div class="wrap" v-show="close || false">
+    <div class="dialog_wrap" v-show="close || false">
         <div class="button" @click="closeWrap">
             <img src="../assets/img/close.png"alt="">
         </div>
@@ -33,7 +33,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.wrap{
+.dialog_wrap{
     top: 0;
     left: 0;
     z-index: 100;

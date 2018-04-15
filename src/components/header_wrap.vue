@@ -5,29 +5,35 @@
             <li class="path">OUR PROJECT</li>
             <li class="path" @click="go">ARTWORKS</li>
         </ul>
-        <span class="login">登录</span>
+        <span class="login" @click="login">登录</span>
         <dialog-wrap
             :closeState="show_login"
             @toggle="close">
+            <login-wrap @cancle="close"></login-wrap>
         </dialog-wrap>
-    </div class="wrap">
+    </div>
 </template>
 <script>
 
 import dialogWrap from './dialog'
+import loginWrap from '../pages/login'
 export default {
   name: 'index',
   data () {
     return {
-        show_login: true
+        show_login: false
     }
   },
   components: {
-    dialogWrap
+    dialogWrap,
+    loginWrap
   },
   methods: {
     close () {
         this.show_login = false
+    },
+    login () {
+        this.show_login = true
     },
     go () {
         this.$router.push('/artworkslist')
@@ -42,6 +48,7 @@ export default {
     background-color: #fff;
     position: relative;
     user-select:none;
+    box-shadow: darkgrey 0 3px 10px;//边框阴影
     .logo{
         vertical-align: top;
         margin-left: 100px;
