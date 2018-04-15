@@ -1,7 +1,9 @@
 <template>
   <div class="artworks-list">
     <div class="artwork-item" v-for="i in 5" @click="gotoDetail()">
-        <img src="@/assets/listImg.png" alt="" class="artwork-img">
+        <div class="artwork_wrap">
+            <img src="@/assets/logo.png" alt="" class="artwork-img">
+        </div>
         <span class="artwork-titlebar">
             <span class="artwork-name">那夜过后渐渐静止的风</span>
             <span class="artwork-fee">￥1080</span>
@@ -40,26 +42,33 @@ export default {
     display: inline-block;
     color: #242424;
     cursor: pointer;
-    .artwork-img{
-        width: 100%;
-        height: 240px;
+    overflow: hidden;
+    .artwork_wrap{
+        text-align: center;
+        background-color: #b9b9b9;
+        .artwork-img{
+            text-align: center;
+            height: 240px;
+        }
     }
     .artwork-titlebar{
         margin-top: 22px;
         margin-bottom: 10px;
         display: block;
         font-size: 0;
+        vertical-align: top;
         .artwork-name{
+            vertical-align: top;
             display: inline-block;
             font-size: 22px;
-            width: 80%;
+            width: calc(~'100% - 90px');
             overflow: hidden;
             text-overflow:ellipsis;
             white-space: nowrap;
         }
         .artwork-fee{
             display: inline-block;
-            width: 20%;
+            width: 90px;
             font-size: 22px;
             text-align: right;
         }

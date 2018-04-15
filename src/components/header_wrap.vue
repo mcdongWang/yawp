@@ -2,12 +2,12 @@
     <div class="wrap">
         <img src="../assets/img/logo.png" height="36" width="128" class="logo"></img>
         <ul class="path_list">
-            <li class="path" @click="go('/')">OUR PROJECT</li>
-            <li class="path" @click="go('/artworkslist')">ARTWORKS</li>
+            <li class="path" :class="{'path_selected' : $route.path == '/'}"@click="go('/')">OUR PROJECT</li>
+            <li class="path" :class="{'path_selected' : $route.path.match(/artwork/i)}" @click="go('/artworkslist')">ARTWORKS</li>
         </ul>
         <span class="login" @click="login">登录</span>
         <dialog-wrap
-            :closeState="show_login"
+            :closeState="showLogin"
             @toggle="close">
             <login-wrap @cancle="close"></login-wrap>
         </dialog-wrap>
@@ -21,7 +21,8 @@ export default {
   name: 'index',
   data () {
     return {
-        show_login: false
+        showLogin: false,
+        hasLogin: false
     }
   },
   components: {
@@ -30,10 +31,10 @@ export default {
   },
   methods: {
     close () {
-        this.show_login = false
+        this.showLogin = false
     },
     login () {
-        this.show_login = true
+        this.showLogin = true
     },
     go (path) {
         this.$router.push(path)
@@ -46,7 +47,9 @@ export default {
     width: 100%;
     height: 80px;
     background-color: #fff;
-    position: relative;
+    position: fixed;
+    top: 0;
+    z-index: 50;
     user-select:none;
     box-shadow: darkgrey 0 3px 10px;//边框阴影
     .logo{
@@ -70,6 +73,19 @@ export default {
             display: inline-block;
             font-size: 20px;
             color: #242424;
+        }
+        .path_selected{
+            position: relative;
+            font-weight: bolder;
+            &:after{
+                content: '';
+                width: 30px;
+                height: 4px;
+                background-color: #242424;
+                position: absolute;
+                bottom: -10px;
+                left: calc(~'50% - 15px');
+            }
         }
     }
     .login{

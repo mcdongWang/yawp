@@ -20,5 +20,6 @@ export default {
 <style>
 #app{
   background-color: #f8f8f8;
+  padding-top: 80px;
 }
 </style>

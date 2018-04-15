@@ -43,13 +43,14 @@ export default {
     width: 1200px;
     margin: 0 auto;
     color: #222;
+    text-align: left;
 }
 .original-check-result{
     font-size: 0px;
     vertical-align: top;
     .artwork-img{
         width: 100%;
-        margin-top: 60px;
+        margin-top: 120px;
     }
     .img-block, .img-createDate, .img-block-p{
         font-size: 14px;

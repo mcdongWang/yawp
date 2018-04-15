@@ -4,18 +4,35 @@
         <p class="form_info">使用YAWPART数字版权区块链搜索引擎，随时查询数字作品的原创性信息，让侵权行为无处可藏</p>
         <input type="text" class="form_input" placeholder="Block ID" v-model="searchValue"/>
         <button class="form_btn" @click="search">查询</button>
+        <dialog-wrap
+            :closeState="showLogin"
+            @toggle="close">
+            <link-check-result></link-check-result>
+        </dialog-wrap>
     </div>
 </template>
 <script>
+
+import dialogWrap from '../components/dialog'
+import linkCheckResult from './linkCheckResult'
 export default {
   name: 'LinkCheck',
   data () {
     return {
+        showLogin: false,
         searchValue: ''
     }
   },
+  components: {
+    dialogWrap,
+    linkCheckResult
+  },
   methods: {
+    close () {
+        this.showLogin = false
+    },
     search () {
+        this.showLogin = true
         console.log('search', this.searchValue)
     }
   }

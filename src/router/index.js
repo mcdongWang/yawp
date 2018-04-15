@@ -5,6 +5,7 @@ import artworksList from '@/pages/artworksList'
 import artworkDetail from '@/pages/artworkDetail'
 import user from '@/pages/user'
 import linkCheck from '@/pages/linkCheck'
+import selfCheck from '@/pages/upload'
 
 Vue.use(Router)
 
@@ -38,6 +39,9 @@ export default new Router({
       }, {
         path: 'ownlist',
         component: artworksList,
+      }, {
+        path: 'selfcheck',
+        component: selfCheck,
       }, {
         path: 'linkcheck',
         component: linkCheck,

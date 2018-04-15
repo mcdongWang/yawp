@@ -36,15 +36,16 @@ export default {
 <style lang="less" scoped>
 .link-check-result{
     width: 1200px;
-    margin: 0 auto;
+    margin: 0 auto 0;
     color: #222;
+    text-align: left;
 }
 .link-check-result{
     vertical-align: top;
     padding-bottom: 125px;
     .artwork-img{
         width: 100%;
-        margin-top: 60px;
+        margin-top: 120px;
     }
     .img-block, .img-createDate, .img-block-p{
         font-size: 14px;
