@@ -1,5 +1,5 @@
 <template>
-  <div class="search-original-result">
+  <div class="link-check-result">
     <img src="@/assets/detailImg.png" alt="" class="artwork-img">
     <span class="img-block">BlockChain ID：0897ae780d986767x098fd7098ae98ad087787a876</span>
     <span class="img-createDate">区块链创建时间：2018-03-02</span>
@@ -13,23 +13,18 @@
         </div>
         <div class="artwork-price">
             <span class="price">$22</span>
-            <button class="buy">
-                <p>版本数量100</p>
-                <p>剩余54</p>
-            </button>
+            <span class="number">当前版本编号:9 of 100</span>
         </div>
     </div>
+    <p class="img-block-p">当前拥有者：0897ae780d986767x098fd7098ae98ad087787a876</p>
+    <p class="img-block-p">上一位拥有者：0897ae780d986767x098fd7098ae98ad087787a876</p>
 
-    <div class="artwork-records">
-        <h1 class="title">Blockchain Records</h1>
-        <p class="record-item" v-for="i in 5">BlockChain ID：create：0897ae780d986767x098fd7098ae98ad087787a876</p>
-    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'SearchBlockResult',
+  name: 'LinkCheckResult',
   data () {
     return {
     }
@@ -39,14 +34,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
-.search-original-result{
+.link-check-result{
     width: 1200px;
     margin: 0 auto;
     color: #222;
 }
-.search-original-result{
-    font-size: 0px;
+.link-check-result{
     vertical-align: top;
+    padding-bottom: 125px;
     .artwork-img{
         width: 100%;
         margin-top: 60px;
@@ -65,15 +60,13 @@ export default {
     }
     .info-box{
         font-size: 0;
-        border-bottom: 1px solid #ccc;
-        padding-bottom: 40px;
         .artwork-info{
-            width: calc(100% - 420px);
+            width: 70%;
             display: inline-block;
             margin-right: 100px;
         }
         .artwork-price{
-            min-width: 320px;
+            width: calc(100% - 70% - 100px);
             display: inline-block;
             vertical-align: top;
             .price{
@@ -89,8 +82,7 @@ export default {
             .buy{
                 font-size: 22px;
                 color: #fff;
-                width: 320px;
-                height: 104px;
+                padding: 20px 108px;
                 background-color: #222;
                 border: 0;
                 margin-top: 20px;
