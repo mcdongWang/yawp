@@ -4,7 +4,7 @@ import index from '@/pages/index'
 import artworksList from '@/pages/artworksList'
 import artworkDetail from '@/pages/artworkDetail'
 import user from '@/pages/user'
-import result from '@/pages/searchOriginalResult'
+import linkCheck from '@/pages/linkCheck'
 
 Vue.use(Router)
 
@@ -38,12 +38,10 @@ export default new Router({
       }, {
         path: 'ownlist',
         component: artworksList,
+      }, {
+        path: 'linkcheck',
+        component: linkCheck,
       }]
     },
-    {
-      path: '/result',
-      name: result,
-      component: result
-    }
   ]
 })
