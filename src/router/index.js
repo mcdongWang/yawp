@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import index from '@/pages/index'
 import artworksList from '@/pages/artworksList'
 import artworkDetail from '@/pages/artworkDetail'
-import result from '@/pages/searchBlockResult'
+import result from '@/pages/searchOriginalResult'
 
 Vue.use(Router)
 
