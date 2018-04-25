@@ -1,30 +1,44 @@
 <template>
   <div class="artworks-list">
-    <div class="artwork-item" v-for="i in 5" @click="gotoDetail()">
+    <div class="artwork-item" v-for="item in artworkList" @click="gotoDetail(item.fid)">
         <div class="artwork_wrap">
-            <img src="@/assets/logo.png" alt="" class="artwork-img">
+            <img :src="item.path" alt="" class="artwork-img">
         </div>
         <span class="artwork-titlebar">
-            <span class="artwork-name">那夜过后渐渐静止的风</span>
-            <span class="artwork-fee">￥1080</span>
+            <span class="artwork-name">{{item.name}}</span>
+            <span class="artwork-fee">￥{{item.price}}</span>
         </span>
-        <span class="artwork-artist">LU SHAN</span>
+        <span class="artwork-artist">{{item.author}}</span>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ArtworksList',
-  data () {
-    return {
+    name: 'ArtworksList',
+    data () {
+        return {
+            artworkList: []
+        }
+    },
+    methods: {
+        gotoDetail (fid) {
+            this.$router.push(`/artworkDetail/${fid}`)
+        },
+        getList () {
+            this.$ajax.get('/api/galerry')
+            .then(response => {
+                console.log(response.data)
+                this.artworkList = response.data.data
+            })
+            .catch(error => {
+                console.log(error)
+            });
+        },
+    },
+    created () {
+        this.getList()
     }
-  },
-  methods: {
-    gotoDetail () {
-        this.$router.push({name: 'artworkDetail'})
-    }
-  }
 }
 </script>
 
@@ -47,12 +61,13 @@ export default {
         text-align: center;
         background-color: #b9b9b9;
         .artwork-img{
+            display: inline-block;
             text-align: center;
             height: 240px;
         }
     }
     .artwork-titlebar{
-        margin-top: 22px;
+        margin-top: 20px;
         margin-bottom: 10px;
         display: block;
         font-size: 0;
@@ -75,6 +90,7 @@ export default {
     }
     .artwork-artist{
         font-size: 16px;
+        line-height: 20px;
     }
     &:nth-child(3n){
         margin-right: 0;

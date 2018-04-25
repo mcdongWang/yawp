@@ -23,7 +23,7 @@ export default new Router({
       component: artworksList
     },
     {
-      path: '/artworkDetail',
+      path: '/artworkDetail/:fid',
       name: 'artworkDetail',
       component: artworkDetail
     },
