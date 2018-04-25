@@ -36,36 +36,37 @@
             <div class="wrap_left wrap">
                 <img class="user_photo" src="../assets/listImg.png" alt="">
                 <ul class="user_list">
-                    <li class="user_name user_name_selected">CHEN XIAOWEI</li>
-                    <li class="user_name">LU SHAN</li>
+                    <li :class="[activeProjectIndex == index ? 'user_name_selected' : '', 'user_name']" v-for="(item, index) in projectsList" @click="pickProjectAuther(index)">{{item.author}}</li>
+                    <!-- <li class="user_name">LU SHAN</li>
                     <li class="user_name">YU YIMENG</li>
                     <li class="user_name">YANG LIQIAN</li>
-                    <li class="user_name">YU YIMENG</li>
+                    <li class="user_name">YU YIMENG</li> -->
                 </ul>
             </div>
-            <div class="wrap_mid wrap">
-                <img class="project_img project_img_height" src="../assets/img/banner.png">
-                <img class="project_img project_img_width" src="../assets/img/banner.png">
+            <div class="wrap_mid wrap" v-if="projectsList[activeProjectIndex]">
+                <img class="project_img project_img_height" :src="projectsList[activeProjectIndex].pics[0]">
+                <img class="project_img project_img_width" :src="projectsList[activeProjectIndex].pics[1]">
             </div>
-            <div class="wrap_right wrap">
-                <img class="project_img project_img_width" src="../assets/img/banner.png">
-                <img class="project_img project_img_height" src="../assets/img/banner.png">
+            <div class="wrap_right wrap" v-if="projectsList[activeProjectIndex]">
+                <img class="project_img project_img_width" :src="projectsList[activeProjectIndex].pics[2]">
+                <img class="project_img project_img_height" :src="projectsList[activeProjectIndex].pics[3]">
             </div>
         </div>
     </div>
-    <div class="artworks">
+    <div class="artworks" v-for="(item, index) in artworksList" v-show="index == activeArtworkIndex">
         <div class="art">
-            <img src="../assets/img/banner.png" alt="">
+            <!-- :src="artworksList[activeArtworkIndex].pic" -->
+            <img :src="artworksList[activeArtworkIndex].pic" alt="">
         </div>
         <div class="art_info">
             <p class="title">ARTWORKS</p>
             <div class="wrap">
-                <p class="wrap_title">凝固的风</p>
-                <p class="wrap_content">不知道拼音文字的《惶然录》是什么样的语感，读着汉译的佩索阿，自然而然的想起的是卡夫卡，还有加聊笔下的那个局外人默尔索...</p>
+                <p class="wrap_title">{{item.name}}</p>
+                <p class="wrap_content">{{item.comment}}</p>
             </div>
             <div class="control">
-                <span>&lt;</span>
-                <span>&gt;</span>
+                <span @click="goPrevious(index)">&lt;</span>
+                <span @click="goNext(index)">&gt;</span>
             </div>
         </div>
     </div>
@@ -74,12 +75,48 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+    name: 'HelloWorld',
+    data () {
+        return {
+            projectsList: [],
+            activeProjectIndex: 0,
+            artworksList: [],
+            activeArtworkIndex: 0
+        }
+    },
+    methods: {
+        getList () {
+            this.$ajax.get('/api/home')
+            .then(response => {
+                console.log(response.data.artworks)
+                this.projectsList = response.data.projects
+                this.artworksList = response.data.artworks
+            })
+            .catch(error => {
+                console.log(error)
+            });
+        },
+        pickProjectAuther (index) {
+            this.activeProjectIndex = index
+        },
+        goPrevious (index) {
+            if (index != 0) {
+                this.activeArtworkIndex --
+            } else {
+                this.activeArtworkIndex = this.artworksList.length - 1
+            }
+        },
+        goNext (index) {
+            if (index != this.artworksList.length - 1) {
+                this.activeArtworkIndex ++
+            } else {
+                this.activeArtworkIndex = 0
+            }
+        }
+    },
+    created () {
+        this.getList()
     }
-  }
 }
 </script>
 
@@ -255,6 +292,7 @@ export default {
         margin: 115px auto 180px auto;
         position: relative;
         .art{
+            height: 530px;
             img{
                 height: 530px;
                 width: 792px;
