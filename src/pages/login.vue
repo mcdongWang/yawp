@@ -1,14 +1,86 @@
 <template>
     <div class="login_wrap">
         <img class="login_logo" src="../assets/img/logo_black.png">
+        <form method="post" action="http://140.143.53.40/api/upload" enctype="multipart/form-data">
+            <input type="file" name="image">
+            <input type="text" name="cr" value="123">
+            <input type="text" name="artname" value="123">
+            <input type="text" name="price" value="123">
+            <input type="text" name="count" value="123">
+            <input type="text" name="comments" value="123">
+            <input type="submit" value="1" />
+        </form>
         <p class="login_label">Name</p>
-        <input type="text">
+        <input
+            :class="{'input_warning': inputWarning.username}"
+            :palceholder="placeholder.username"
+            type="text"
+            v-model="userInfo.username"
+            @blur="blur('username')"
+            @input="blur('username')">
         <p class="login_label">Password</p>
-        <input class="input_warning" type="password">
-        <div class="login_btn">LOGIN</div>
+        <input
+            :class="{'input_warning': inputWarning.password}"
+            :palceholder="placeholder.username"
+            type="password"
+            v-model="userInfo.password"
+            @blur="blur('password')"
+            @input="blur('password')">
+        <div @click="login" class="login_btn">LOGIN</div>
         <div class="login_cancle" @click="$emit('cancle')">暂不登录</div>
     </div>
 </template>
+<script>
+export default {
+    name: 'login',
+    data () {
+        return {
+            userInfo: {
+                username: '',
+                password: ''
+            },
+            inputWarning: {
+                username: false,
+                password: false
+            },
+            placeholder: {
+                username: '请输入帐号',
+                password: '请输入密码'
+            },
+            warningContent: ''
+        }
+    },
+    methods: {
+        login() {
+
+            console.log(this.userInfo)
+        },
+        blur(type) {
+            console.log(type)
+            console.log(this.userInfo[type])
+            if(!this.userInfo[type]){
+                this.inputWarning[type] = true
+            }else{
+                this.inputWarning[type] = false
+            }
+        },
+        check() {
+            let warningList = []
+            if(!this.userInfo.username){
+                warningList.push('帐号')
+            }
+            if(!this.userInfo.username){
+                warningList.push('密码')
+            }
+            if(warningList.length){
+
+            }else{
+                this.warningContent = ''
+            }
+        }
+    }
+}
+</script>
 <style lang="less" scoped>
 // input placeholder 颜色修改
 .placeholder(@rules) {
