@@ -1,15 +1,16 @@
 <template>
     <div class="wrap">
-        <img src="../assets/img/logo.png" height="36" width="128" class="logo"></img>
+        <img @click="go('/')" src="../assets/img/logo.png" height="36" width="128" class="logo"></img>
         <ul class="path_list">
             <li class="path" :class="{'path_selected' : $route.path == '/'}"@click="go('/')">OUR PROJECT</li>
             <li class="path" :class="{'path_selected' : $route.path.match(/artwork/i)}" @click="go('/artworkslist')">ARTWORKS</li>
         </ul>
-        <span class="login" @click="login">登录</span>
+        <span v-show="!username" class="login" @click="login">登录</span>
+        <span v-show="username" class="login" @click="go('/user')">{{username}}</span>
         <dialog-wrap
             :closeState="showLogin"
             @toggle="close">
-            <login-wrap @cancle="close"></login-wrap>
+            <login-wrap @cancle="close" @loginSuccess="loginSuccess"></login-wrap>
         </dialog-wrap>
     </div>
 </template>
@@ -22,7 +23,8 @@ export default {
   data () {
     return {
         showLogin: false,
-        hasLogin: false
+        hasLogin: false,
+        username: ''
     }
   },
   components: {
@@ -38,6 +40,11 @@ export default {
     },
     go (path) {
         this.$router.push(path)
+    },
+    loginSuccess (value) {
+        this.showLogin = false
+        this.username = value
+        // console.log(value)
     }
   }
 }
@@ -53,6 +60,7 @@ export default {
     user-select:none;
     box-shadow: darkgrey 0 3px 10px;//边框阴影
     .logo{
+        cursor: pointer;
         vertical-align: top;
         margin-left: 100px;
         display: inline-block;

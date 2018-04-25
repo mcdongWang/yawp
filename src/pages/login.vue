@@ -1,15 +1,6 @@
 <template>
     <div class="login_wrap">
         <img class="login_logo" src="../assets/img/logo_black.png">
-        <form method="post" action="http://140.143.53.40/api/upload" enctype="multipart/form-data">
-            <input type="file" name="image">
-            <input type="text" name="cr" value="123">
-            <input type="text" name="artname" value="123">
-            <input type="text" name="price" value="123">
-            <input type="text" name="count" value="123">
-            <input type="text" name="comments" value="123">
-            <input type="submit" value="1" />
-        </form>
         <p class="login_label">Name</p>
         <input
             :class="{'input_warning': inputWarning.username}"
@@ -26,11 +17,14 @@
             v-model="userInfo.password"
             @blur="blur('password')"
             @input="blur('password')">
+        <p v-show="warningContent" class="login_label">{{warningContent}}</p>
         <div @click="login" class="login_btn">LOGIN</div>
         <div class="login_cancle" @click="$emit('cancle')">暂不登录</div>
     </div>
 </template>
 <script>
+
+import md5 from 'md5'
 export default {
     name: 'login',
     data () {
@@ -52,12 +46,33 @@ export default {
     },
     methods: {
         login() {
-
-            console.log(this.userInfo)
+            if(this.check()){
+                let params = {
+                    username: this.userInfo.username,
+                    password: md5(this.userInfo.password)
+                }
+                this.$ajax.post('/api/login', params)
+                    .then(res => {
+                        if(res.data.status == 0){
+                            console.log('登录成功')
+                            this.$emit('loginSuccess', params.username)
+                        }else{
+                            console.log('登录失败')
+                            this.warningContent = '账号或密码错误'
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        this.warningContent = '网络错误, 请稍后再试'
+                    })
+            }else{
+                return
+            }
         },
         blur(type) {
-            console.log(type)
-            console.log(this.userInfo[type])
+            if(this.warningContent){
+                this.check()
+            }
             if(!this.userInfo[type]){
                 this.inputWarning[type] = true
             }else{
@@ -69,13 +84,15 @@ export default {
             if(!this.userInfo.username){
                 warningList.push('帐号')
             }
-            if(!this.userInfo.username){
+            if(!this.userInfo.password){
                 warningList.push('密码')
             }
             if(warningList.length){
-
+                this.warningContent = `请输入${warningList.join('、')}`
+                return false
             }else{
                 this.warningContent = ''
+                return true
             }
         }
     }
