@@ -22,8 +22,8 @@ export default {
         }
     },
     methods: {
-        gotoDetail (fid) {
-            this.$router.push(`/artworkDetail/${fid}`)
+        gotoDetail (id) {
+            this.$router.push(`/artworkDetail/${id}`)
         },
         getList () {
             this.$ajax.get('/api/galerry')

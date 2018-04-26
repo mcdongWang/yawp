@@ -1,34 +1,64 @@
 <template>
   <div class="artwork-detail">
-    <img src="@/assets/detailImg.png" alt="" class="artwork-img">
+    <img :src="artworkInfo.path" alt="" class="artwork-img">
     <div class="info-box">
         <div class="artwork-info">
             <div class="info-title">
-                <span class="title">镜光，埃尔帕索</span>
-                <span class="artist">平川典俊</span>
+                <span class="title">{{artworkInfo.name}}</span>
+                <span class="artist">{{artworkInfo.author}}</span>
             </div>
-            <span class="content">在平川典俊的摄影作品《镜光，埃尔帕索》里，一个女人看向镜中的自己，同时撩起有褶边的裙子，露出薄丝底裤。平川典俊描述说：“（照片里的）一个女人在等电梯时，在电梯间的镜子里查看自己的脸。”这是典型的平川典俊的作品，里面包含其摄影的各种特征：在某个未知的地方的单身女性形象、摆出某种暗示却并非刻意色情的姿势、仿佛对其露骨的性暗示并不自知。</span>
+            <span class="content">{{artworkInfo.comment}}</span>
         </div>
         <div class="artwork-price">
-            <span class="price">￥22</span>
-            <span class="number">共100个数字版权&nbsp;剩余54个</span>
-            <button class="buy">Buy Now!</button>
+            <span class="price">￥{{artworkInfo.price}}</span>
+            <span class="number">共{{artworkInfo.countT}}个数字版权&nbsp;剩余{{artworkInfo.countN}}个</span>
+            <button class="buy disabled" disabled="disabled">Buy Now!</button>
         </div>
     </div>
     <div class="artwork-records">
         <h1 class="title">Blockchain Records</h1>
-        <p class="record-item" v-for="i in 5">BlockChain ID：create：0897ae780d986767x098fd7098ae98ad087787a876</p>
+        <p class="record-item" v-for="item in artworkInfo.steps">BlockChain ID：{{item | formatRecords}}</p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ArtworkDetail',
-  data () {
-    return {
+    name: 'ArtworkDetail',
+    data () {
+        return {
+            id: this.$route.params.id,
+            artworkInfo: {}
+        }
+    },
+    filters: {
+        formatRecords (val) {
+            let obj = JSON.parse(val)
+            for (let x in obj) {
+                return `${x}：${obj[x]}`
+            }
+        }
+    },
+    methods: {
+        getInfo () {
+            this.$ajax.get('/api/artwork', {
+                params: {
+                    id: this.id
+                }
+            })
+            .then(response => {
+                console.log(response.data)
+                this.artworkInfo = response.data
+            })
+            .catch(error => {
+                console.log(error)
+            });
+        },
+    },
+    created () {
+        this.getInfo()
     }
-  }
+
 }
 </script>
 
@@ -40,6 +70,7 @@ export default {
     color: #222;
 }
 .artwork-img{
+    display: inline-block;
     width: 100%;
     margin-top: 60px;
     margin-bottom: 80px;
@@ -100,6 +131,11 @@ export default {
         background-color: #222;
         border: 0;
         margin-top: 20px;
+        cursor: pointer;
+    }
+    .disabled{
+        cursor: inherit;
+        opacity: 0.6;
     }
 }
 .artwork-records{
