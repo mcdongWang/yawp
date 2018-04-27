@@ -1,21 +1,20 @@
 <template>
-  <div class="artworks-list">
+  <div class="my-artworks-list">
     <div class="artwork-item" v-for="item in artworkList" @click="gotoDetail(item.fid)">
         <div class="artwork_wrap">
             <img :src="item.path" alt="" class="artwork-img">
         </div>
         <span class="artwork-titlebar">
-            <span class="artwork-name">{{item.name}}</span>
+            <span class="artwork-name">{{item.artname}}</span>
             <span class="artwork-fee">￥{{item.price}}</span>
         </span>
-        <span class="artwork-artist">{{item.author}}</span>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-    name: 'ArtworksList',
+    name: 'MyArtworksList',
     data () {
         return {
             artworkList: []
@@ -26,10 +25,10 @@ export default {
             this.$router.push(`/artworkDetail/${id}`)
         },
         getList () {
-            this.$ajax.get('/api/galerry')
+            this.$ajax.get('/api/person')
             .then(response => {
                 console.log(response.data)
-                this.artworkList = response.data.data
+                this.artworkList = response.data.list
             })
             .catch(error => {
                 console.log(error)
