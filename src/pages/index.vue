@@ -43,20 +43,20 @@
                     <li class="user_name">YU YIMENG</li> -->
                 </ul>
             </div>
-            <div class="wrap_mid wrap" v-if="projectsList[activeProjectIndex]">
-                <img class="project_img project_img_height" :src="projectsList[activeProjectIndex].pics[0]">
-                <img class="project_img project_img_width" :src="projectsList[activeProjectIndex].pics[1]">
+            <div class="wrap_mid wrap">
+                <img v-if="projectsList[activeProjectIndex]" class="project_img project_img_height" :src="projectsList[activeProjectIndex].pics[0]">
+                <img v-if="projectsList[activeProjectIndex]" class="project_img project_img_width" :src="projectsList[activeProjectIndex].pics[1]">
             </div>
-            <div class="wrap_right wrap" v-if="projectsList[activeProjectIndex]">
-                <img class="project_img project_img_width" :src="projectsList[activeProjectIndex].pics[2]">
-                <img class="project_img project_img_height" :src="projectsList[activeProjectIndex].pics[3]">
+            <div class="wrap_right wrap">
+                <img v-if="projectsList[activeProjectIndex]" class="project_img project_img_width" :src="projectsList[activeProjectIndex].pics[2]">
+                <img v-if="projectsList[activeProjectIndex]" class="project_img project_img_height" :src="projectsList[activeProjectIndex].pics[3]">
             </div>
         </div>
     </div>
     <div class="artworks" v-for="(item, index) in artworksList" v-show="index == activeArtworkIndex">
         <div class="art">
             <!-- :src="artworksList[activeArtworkIndex].pic" -->
-            <img :src="artworksList[activeArtworkIndex].pic" alt="">
+            <img :src="artworksList[activeArtworkIndex].pic">
         </div>
         <div class="art_info">
             <p class="title">ARTWORKS</p>

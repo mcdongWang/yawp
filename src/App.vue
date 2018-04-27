@@ -19,6 +19,7 @@ export default {
 </script>
 <style>
 #app{
+  min-width: 1280px;
   background-color: #f8f8f8;
   padding-top: 80px;
 }
