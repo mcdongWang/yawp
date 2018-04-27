@@ -7,7 +7,7 @@
         <dialog-wrap
             :closeState="showLogin"
             @toggle="close">
-            <link-check-result></link-check-result>
+            <link-check-result :art-info="artInfo"></link-check-result>
         </dialog-wrap>
     </div>
 </template>
@@ -16,26 +16,49 @@
 import dialogWrap from '../components/dialog'
 import linkCheckResult from './linkCheckResult'
 export default {
-  name: 'LinkCheck',
-  data () {
-    return {
-        showLogin: false,
-        searchValue: ''
-    }
-  },
-  components: {
-    dialogWrap,
-    linkCheckResult
-  },
-  methods: {
-    close () {
-        this.showLogin = false
+    name: 'LinkCheck',
+    data () {
+        return {
+            showLogin: false,
+            searchValue: '',
+            artInfo: {
+                bloackID: '',
+                blockCreationTime: '',
+                artworkName: '',
+                author: '',
+                comments: '',
+                price: '',
+                editionLeft: '',
+                editionTotal: '',
+                owner: '',
+                ownerBefore: ''
+            }
+        }
     },
-    search () {
-        this.showLogin = true
-        console.log('search', this.searchValue)
+    components: {
+        dialogWrap,
+        linkCheckResult
+    },
+    methods: {
+        close () {
+            this.showLogin = false
+        },
+        search () {
+            this.$ajax.get('/api/search?', {
+                params: {
+                    // data: this.searchValue
+                    data: 'dc192343e61e997deccaa03aacaf6e9a95236ed27d311c0f197681b16df94ccd'
+                }
+            })
+            .then(response => {
+                this.showLogin = true
+                this.artInfo = response.data
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        }
     }
-  }
 }
 </script>
 <style lang="less" scoped>

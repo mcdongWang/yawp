@@ -1,34 +1,41 @@
 <template>
   <div class="link-check-result">
     <img src="@/assets/detailImg.png" alt="" class="artwork-img">
-    <span class="img-block">BlockChain ID：0897ae780d986767x098fd7098ae98ad087787a876</span>
-    <span class="img-createDate">区块链创建时间：2018-03-02</span>
+    <span class="img-block">BlockChain ID：{{artInfo.bloackID}}</span>
+    <span class="img-createDate">区块链创建时间：{{artInfo.blockCreationTime}}</span>
     <div class="info-box">
         <div class="artwork-info">
             <div class="info-title">
-                <span class="title">镜光，埃尔帕索</span>
-                <span class="artist">平川典俊</span>
+                <span class="title">{{artInfo.artworkName}}</span>
+                <span class="artist">{{artInfo.author}}</span>
             </div>
-            <span class="content">在平川典俊的摄影作品《镜光，埃尔帕索》里，一个女人看向镜中的自己，同时撩起有褶边的裙子，露出薄丝底裤。平川典俊描述说：“（照片里的）一个女人在等电梯时，在电梯间的镜子里查看自己的脸。”这是典型的平川典俊的作品，里面包含其摄影的各种特征：在某个未知的地方的单身女性形象、摆出某种暗示却并非刻意色情的姿势、仿佛对其露骨的性暗示并不自知。</span>
+            <span class="content">{{artInfo.comments}}}</span>
         </div>
         <div class="artwork-price">
-            <span class="price">$22</span>
-            <span class="number">当前版本编号:9 of 100</span>
+            <span class="price">￥{{artInfo.price}}</span>
+            <span class="number">当前版本编号:{{artInfo.editionLeft}} of {{artInfo.editionTotal}}</span>
         </div>
     </div>
-    <p class="img-block-p">当前拥有者：0897ae780d986767x098fd7098ae98ad087787a876</p>
-    <p class="img-block-p">上一位拥有者：0897ae780d986767x098fd7098ae98ad087787a876</p>
-
+    <p class="img-block-p">当前拥有者：{{artInfo.owner}}</p>
+    <p class="img-block-p">上一位拥有者：{{artInfo.ownerBefore}}</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'LinkCheckResult',
-  data () {
-    return {
+    name: 'LinkCheckResult',
+    data () {
+        return {
+        }
+    },
+    props: {
+        artInfo: {
+            type: Object
+        }
+    },
+    created () {
+
     }
-  }
 }
 </script>
 

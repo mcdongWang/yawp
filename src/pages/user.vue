@@ -8,7 +8,8 @@
         </div>
         <div class="user_nav">
             <div class="user_nav_item" :class="{'user_nav_selected' : $route.path == '/user/artlist'}" @click="go('artlist')">我的作品</div>
-            <div class="user_nav_item" :class="{'user_nav_selected' : $route.path == '/user/ownlist'}" @click="go('ownlist')">已购作品</div>
+            <!-- <div class="user_nav_item" :class="{'user_nav_selected' : $route.path == '/user/ownlist'}" @click="go('ownlist')">已购作品</div> -->
+            <div class="user_nav_item">已购作品</div>
             <div class="user_nav_item" :class="{'user_nav_selected' : $route.path == '/user/selfcheck'}" @click="go('selfcheck')">原创性查询</div>
             <div class="user_nav_item" :class="{'user_nav_selected' : $route.path == '/user/linkcheck'}" @click="go('linkcheck')">区块链版权查询</div>
         </div>

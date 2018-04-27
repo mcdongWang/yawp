@@ -4,6 +4,7 @@ import index from '@/pages/index'
 import artworksList from '@/pages/artworksList'
 import artworkDetail from '@/pages/artworkDetail'
 import user from '@/pages/user'
+import myArtworks from '@/pages/myArtworks'
 import linkCheck from '@/pages/linkCheck'
 import selfCheck from '@/pages/upload'
 
@@ -35,7 +36,7 @@ export default new Router({
         redirect: 'artlist'
       }, {
         path: 'artlist',
-        component: artworksList,
+        component: myArtworks,
       }, {
         path: 'ownlist',
         component: artworksList,
