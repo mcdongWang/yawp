@@ -4,19 +4,20 @@
                 <img src="../assets/img/logo_black.png" alt="">
                 <p class="upload_title_content">现在就上传你的数字作品吧!</p>
             </div>
-            <div class="upload_input">
-                <img v-show="page == 1" class="upload_input_btn" src="../assets/img/upload.png"></img>
-                <p  v-show="page == 1"class="upload_input_btn_content">点击上传作品图片</p>
-                <img v-show="page == 2" class="pic" src="../assets/listImg.png" alt="">
+            <div class="upload_input" @click="upload">
+                    <img v-show="imgPath" class="img_preview" :src="imgPath">
+                    <img v-show="page == 1 && !imgPath" class="upload_input_btn" src="../assets/img/upload.png"></img>
+                    <p  v-show="page == 1 && !imgPath"class="upload_input_btn_content">点击上传作品图片</p>
             </div>
             <div v-show="page == 1">
-                <input type="text" placeholder="请输入作品名称">
-                <input type="text" placeholder="请输入版权人信息">
-                <input type="number" placeholder="该版本销售价格" class="half_width">
-                <input type="number" placeholder="该版本发售数量" class="half_width ml">
+                <input class="file_upload_btn" type="file" @change="getImageUpload" ref="file">
+                <input v-model="artInfo.artname" type="text" placeholder="请输入作品名称">
+                <input v-model="artInfo.cr" type="text" placeholder="请输入版权人信息">
+                <input v-model="artInfo.price" type="number" placeholder="该版本销售价格" class="half_width">
+                <input v-model="artInfo.count" type="number" placeholder="该版本发售数量" class="half_width ml">
             </div>
             <div v-show="page == 2">
-                <textarea class="area" placeholder="请输入作品描述"></textarea>
+                <textarea v-model="artInfo.comments" class="area" placeholder="请输入作品描述"></textarea>
             </div>
             <div class="next_btn" @click="pageChange()">{{page == 2 ? '发布作品' : '下一步'}}</div>
             <div class="cancle_upload" @click="cancle()">{{page == 2 ? '上一步' : '取消上传'}}</div>
@@ -27,7 +28,17 @@ export default {
   name: 'upload',
   data () {
     return {
-      page: 1
+      page: 1,
+      imgPath: '',
+      uploading: false,
+      artInfo: {
+        img: '',
+        cr: '',
+        artname: '',
+        price: '',
+        count: '',
+        comments: ''
+      }
     }
   },
   methods: {
@@ -35,7 +46,33 @@ export default {
         if(this.page == 1){
             this.page = 2
         }else{
-            alert('上传')
+            this.uploading = true
+            let data = new FormData();
+            data.append('image', this.$refs.file.files[0]);
+            data.append('cr', this.artInfo.cr);
+            data.append('artname', this.artInfo.artname);
+            data.append('price', this.artInfo.price);
+            data.append('count', this.artInfo.count);
+            data.append('comments', this.artInfo.comments);
+
+            this.$ajax.post('/api/upload', data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                    // 'Content-Type': 'x-www-form-urlencoded'
+                }
+            }).then(res => {
+                this.uploading = false
+                console.log(res)
+                if(res.data.status == 1){
+                    alert('上传失败, 请重试')
+                }else{
+                    alert('恭喜, 上传成功')
+                    window.location.reload()
+                }
+            }).catch(err => {
+                this.uploading = false
+                alert('上传失败, 请重试')
+            })
         }
     },
     cancle () {
@@ -44,6 +81,19 @@ export default {
         }else{
             this.page = 1
         }
+    },
+    getImageUpload () {
+        let file = this.$refs.file.files[0];
+        let reader = new FileReader();
+        let vm = this;
+        reader.onload = (e) => {
+            //图片url
+            vm.imgPath = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    },
+    upload () {
+        document.getElementsByClassName('file_upload_btn')[0].click()
     }
   }
 }
@@ -61,6 +111,13 @@ export default {
     margin-top: 174px;
     text-align: center;
     min-height: 500px;
+    .file_upload_btn{
+        width: 0px;
+        height: 0px;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
     .upload_title{
         text-align: left;
         img{
@@ -80,6 +137,7 @@ export default {
         cursor: pointer;
         border: 2px dashed #b7b7b7;
         box-sizing: border-box;
+        position: relative;
         .pic{
             height: 100%;
         }
@@ -89,6 +147,16 @@ export default {
         .upload_input_btn_content{
             margin-top: 20px;
             color: #b7b7b7;
+        }
+        .img_preview{
+            max-width: 100%;
+            max-height: 276px;
+            position:absolute;
+            top:0;
+            bottom:0;
+            left:0;
+            right:0;
+            margin:auto;
         }
     }
     .area{

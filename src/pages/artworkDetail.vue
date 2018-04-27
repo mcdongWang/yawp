@@ -134,7 +134,7 @@ export default {
         cursor: pointer;
     }
     .disabled{
-        cursor: inherit;
+        cursor: not-allowed;
         opacity: 0.6;
     }
 }

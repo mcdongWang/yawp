@@ -46,6 +46,17 @@ export default {
         this.username = value
         // console.log(value)
     }
+  },
+  created () {
+    this.$ajax.get('/api/auth')
+        .then(res => {
+            if(res.data.status && res.data.status == 1){
+                // 未登录
+            }else{
+                this.username = res.data.username
+                this.loginSuccess(this.username)
+            }
+        })
   }
 }
 </script>
