@@ -1,6 +1,6 @@
 <template>
   <div class="link-check-result">
-    <img src="@/assets/detailImg.png" alt="" class="artwork-img">
+    <img :src="artInfo.path" alt="" class="artwork-img">
     <span class="img-block">BlockChain ID：{{artInfo.bloackID}}</span>
     <span class="img-createDate">区块链创建时间：{{artInfo.blockCreationTime}}</span>
     <div class="info-box">
