@@ -53,6 +53,8 @@ export default {
             if(res.data.status && res.data.status == 1){
                 // 未登录
             }else{
+                window.username = res.data.username
+                window.avator = res.data.avator
                 this.username = res.data.username
                 this.loginSuccess(this.username)
             }
@@ -121,7 +123,7 @@ export default {
         background-color: #222;
         color: #fff;
         font-size: 20px;
-        font-family: SourceHanSans;
+        // font-family: SourceHanSans;
     }
 }
 </style>

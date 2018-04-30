@@ -1,8 +1,8 @@
 <template>
     <div class="user_wrap">
         <div class="user_info">
-            <img class="user_photo" src="../assets/listImg.png" alt="">
-            <div class="user_name">LU SHAN</div>
+            <img class="user_photo" :src="userphoto" alt="">
+            <div class="user_name">{{username}}</div>
             <div class="user_work_title">Digital artist</div>
             <div class="user_upload_btn" @click="upload">上传作品</div>
         </div>
@@ -10,10 +10,11 @@
             <div class="user_nav_item" :class="{'user_nav_selected' : $route.path == '/user/artlist'}" @click="go('artlist')">我的作品</div>
             <!-- <div class="user_nav_item" :class="{'user_nav_selected' : $route.path == '/user/ownlist'}" @click="go('ownlist')">已购作品</div> -->
             <div class="user_nav_item disabled">已购作品</div>
-            <div class="user_nav_item disabled" :class="{'user_nav_selected' : $route.path == '/user/selfcheck'}">原创性查询</div>
+            <div class="user_nav_item" :class="{'user_nav_selected' : $route.path == '/user/selfcheck'}" @click="go('selfcheck')">原创性查询</div>
             <div class="user_nav_item" :class="{'user_nav_selected' : $route.path == '/user/linkcheck'}" @click="go('linkcheck')">区块链版权查询</div>
         </div>
         <dialog-wrap
+            v-if="show_upload"
             :closeState="show_upload"
             @toggle="close">
             <upload-wrap @cancle="close"></upload-wrap>
@@ -28,7 +29,9 @@ export default {
   name: 'user',
   data: function () {
     return {
-        show_upload: false
+        show_upload: false,
+        userphoto: '',
+        username: ''
     }
   },
   methods: {
@@ -46,6 +49,18 @@ export default {
     dialogWrap,
     uploadWrap
   },
+  created () {
+    this.$ajax.get('/api/auth')
+        .then(res => {
+            if(res.data.status && res.data.status == 1){
+                // 未登录
+            }else{
+                this.username = res.data.username
+                this.userphoto = res.data.avator
+                this.username = res.data.username
+            }
+        })
+  }
 }
 </script>
 <style lang="less" scoped>

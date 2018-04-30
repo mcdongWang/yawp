@@ -1,22 +1,28 @@
 <template>
     <div class="login_wrap">
         <img class="login_logo" src="../assets/img/logo_black.png">
-        <p class="login_label">Name</p>
-        <input
-            :class="{'input_warning': inputWarning.username}"
-            :palceholder="placeholder.username"
-            type="text"
-            v-model="userInfo.username"
-            @blur="blur('username')"
-            @input="blur('username')">
-        <p class="login_label">Password</p>
-        <input
-            :class="{'input_warning': inputWarning.password}"
-            :palceholder="placeholder.username"
-            type="password"
-            v-model="userInfo.password"
-            @blur="blur('password')"
-            @input="blur('password')">
+        <div class="warning_wrap">
+            <p class="login_label">Name</p>
+            <p v-if="inputWarning.username" class="warning_right">请输入正确的帐号</p>
+            <input
+                :class="{'input_warning': inputWarning.username}"
+                :palceholder="placeholder.username"
+                type="text"
+                v-model="userInfo.username"
+                @blur="blur('username')"
+                @input="blur('username')">
+        </div>
+        <div class="warning_wrap">
+            <p class="login_label">Password</p>
+            <p v-if="inputWarning.password" class="warning_right">请输入正确的密码</p>
+            <input
+                :class="{'input_warning': inputWarning.password}"
+                :palceholder="placeholder.username"
+                type="password"
+                v-model="userInfo.password"
+                @blur="blur('password')"
+                @input="blur('password')">
+        </div>
         <p v-show="warningContent" class="login_label">{{warningContent}}</p>
         <div @click="login" class="login_btn">LOGIN</div>
         <div class="login_cancle" @click="$emit('cancle')">暂不登录</div>
@@ -56,8 +62,11 @@ export default {
                         if(res.data.status == 0){
                             console.log('登录成功')
                             this.$emit('loginSuccess', params.username)
+                            window.location.reload()
                         }else{
                             console.log('登录失败')
+                            this.inputWarning['username'] = true
+                            this.inputWarning['password'] = true
                             this.warningContent = '账号或密码错误'
                         }
                     })
@@ -89,6 +98,8 @@ export default {
             }
             if(warningList.length){
                 this.warningContent = `请输入${warningList.join('、')}`
+                this.inputWarning['username'] = true
+                this.inputWarning['password'] = true
                 return false
             }else{
                 this.warningContent = ''
@@ -112,6 +123,16 @@ export default {
     margin-top: calc(~'(100vh - 500px) / 2');
     text-align: center;
     min-height: 500px;
+    .warning_wrap{
+        position: relative;
+        .warning_right{
+            position: absolute;
+            right: 0px;
+            top: 8px;
+            color: #ff5e5e;
+            font-size: 14px;
+        }
+    }
     .login_logo{
         width: 290px;
         height: 80px;

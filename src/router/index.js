@@ -6,7 +6,7 @@ import artworkDetail from '@/pages/artworkDetail'
 import user from '@/pages/user'
 import myArtworks from '@/pages/myArtworks'
 import linkCheck from '@/pages/linkCheck'
-import selfCheck from '@/pages/upload'
+import selfCheck from '@/pages/originalCheckUpload'
 
 Vue.use(Router)
 

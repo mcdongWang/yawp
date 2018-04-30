@@ -57,12 +57,22 @@ export default {
     cursor: pointer;
     overflow: hidden;
     .artwork_wrap{
+        width: 100%;
         text-align: center;
+        height: 240px;
         background-color: #b9b9b9;
+        position: relative;
         .artwork-img{
-            display: inline-block;
+            position:absolute;
+            top:0;
+            bottom:0;
+            left:0;
+            right:0;
+            margin:auto;
+            max-height: 240px;
+            max-width: 100%;
             text-align: center;
-            height: 240px;
+            vertical-align: middle;
         }
     }
     .artwork-titlebar{

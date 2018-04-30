@@ -13,8 +13,16 @@
                 <input class="file_upload_btn" type="file" @change="getImageUpload" ref="file">
                 <input v-model="artInfo.artname" type="text" placeholder="请输入作品名称">
                 <input v-model="artInfo.cr" type="text" placeholder="请输入版权人信息">
-                <input v-model="artInfo.price" type="number" placeholder="该版本销售价格" class="half_width">
-                <input v-model="artInfo.count" type="number" placeholder="该版本发售数量" class="half_width ml">
+                <input v-model="artInfo.price" min="0" type="number" placeholder="该版本销售价格" class="half_width">
+                <input
+                    :disabled="parseInt(artInfo.price) === 0"
+                    v-model="artInfo.count"
+                    type="number"
+                    :placeholder="parseInt(artInfo.price) === 0 ? '价格为零不可销售' : '该版本发售数量'"
+                    class="half_width ml"
+                    min="0"
+                     onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                     onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}">
             </div>
             <div v-show="page == 2">
                 <textarea v-model="artInfo.comments" class="area" placeholder="请输入作品描述"></textarea>
@@ -66,8 +74,10 @@ export default {
                 if(res.data.status == 1){
                     alert('上传失败, 请重试')
                 }else{
-                    alert('恭喜, 上传成功')
-                    window.location.reload()
+                    // alert('恭喜, 上传成功')
+                    console.log(res.data.fid)
+                    this.$router.push('/artworkDetail/' + res.data.fid)
+                    // window.location.reload()
                 }
             }).catch(err => {
                 this.uploading = false
@@ -84,6 +94,10 @@ export default {
     },
     getImageUpload () {
         let file = this.$refs.file.files[0];
+        console.log(file)
+        if(!file){
+            return
+        }
         let reader = new FileReader();
         let vm = this;
         reader.onload = (e) => {

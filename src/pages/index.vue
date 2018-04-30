@@ -34,7 +34,7 @@
         <p class="sub_title">为上传的数字作品提供隐写数字水印服务，在保证视觉效果的情况下记录您的版权信息。现在已经有一些年轻的数字艺术家和内容创作者加入了我们的计划</p>
         <div class="project_list_wrap">
             <div class="wrap_left wrap">
-                <img class="user_photo" src="../assets/listImg.png" alt="">
+                <img v-if="projectsList[activeProjectIndex]" class="user_photo" :src="projectsList[activeProjectIndex].avator || ''" alt="">
                 <ul class="user_list">
                     <li :class="[activeProjectIndex == index ? 'user_name_selected' : '', 'user_name']" v-for="(item, index) in projectsList" @click="pickProjectAuther(index)">{{item.author}}</li>
                     <!-- <li class="user_name">LU SHAN</li>
@@ -158,7 +158,7 @@ export default {
             font-size: 22px;
             line-height: 48px;
             color: #242424;
-            font-family: SourceHanSans;
+            // font-family: SourceHanSans;
             font-weight: bold;
             border: solid 4px #242424;
         }

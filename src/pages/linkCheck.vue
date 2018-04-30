@@ -2,7 +2,14 @@
     <div class="link_check">
         <p class="form_title">YAWPART数字版权区块链</p>
         <p class="form_info">使用YAWPART数字版权区块链搜索引擎，随时查询数字作品的原创性信息，让侵权行为无处可藏</p>
-        <input type="text" class="form_input" placeholder="Block ID" v-model="searchValue"/>
+        <p v-show="checkWarning" class="link_check_warning">请输入正确的ID</p>
+        <input
+            type="text"
+            class="form_input"
+            :class="{'form_input_warning': checkWarning}"
+            @input="input"
+            placeholder="Block ID"
+            v-model="searchValue"/>
         <button class="form_btn" @click="search">查询</button>
         <dialog-wrap
             :closeState="showLogin"
@@ -32,7 +39,8 @@ export default {
                 editionTotal: '',
                 owner: '',
                 ownerBefore: ''
-            }
+            },
+            checkWarning: false
         }
     },
     components: {
@@ -40,19 +48,33 @@ export default {
         linkCheckResult
     },
     methods: {
+        input (value) {
+            if(this.searchValue){
+                this.checkWarning = false
+            }
+        },
         close () {
             this.showLogin = false
         },
         search () {
-            this.$ajax.get('/api/search?', {
+            if(!this.searchValue){
+                this.checkWarning = true
+                return
+            }
+            this.$ajax.get('/api/search', {
                 params: {
-                    // data: this.searchValue
-                    data: 'dc192343e61e997deccaa03aacaf6e9a95236ed27d311c0f197681b16df94ccd'
+                    data: this.searchValue
+                    // data: 'dc192343e61e997deccaa03aacaf6e9a95236ed27d311c0f197681b16df94ccd'
                 }
             })
             .then(response => {
-                this.showLogin = true
-                this.artInfo = response.data
+                if(response.data.status == 1){
+                    alert('请输入正确的ID')
+                    return
+                }else{
+                    this.showLogin = true
+                    this.artInfo = response.data
+                }
             })
             .catch(error => {
                 console.log(error)
@@ -66,6 +88,18 @@ export default {
     text-align: center;
     padding-top: 60px;
     color: #242424;
+    position: relative;
+    .link_check_warning{
+        position: absolute;
+        top: 204px;
+        left: 50%;
+        margin-left: -280px;
+        text-align: left;
+        font-size: 14px;
+        color: #ff5e5e;
+        width: 560px;
+        // display: inline-block;
+    }
     .form_title{
         font-size: 40px;
     }
@@ -81,9 +115,14 @@ export default {
         padding: 20px 30px;
         font-size: 22px;
     }
+    .form_input_warning{
+        // border-style: unset;
+        // border-color: #ff5e5e;
+        border: 2px solid #ff5e5e;
+    }
     .form_btn{
         display: block;
-        margin: 0 auto 300px;
+        margin: 0 auto 30px;
         font-size: 22px;
         color: #fff;
         padding: 20px 0;
