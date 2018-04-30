@@ -17,7 +17,7 @@
     </div>
     <div class="artwork-records">
         <h1 class="title">Blockchain Records</h1>
-        <p class="record-item" v-for="item in artworkInfo.steps">BlockChain ID：{{item | formatRecords}}</p>
+        <p class="record-item" v-for="item in artworkInfo.steps">BlockChain ID：{{item.created}}</p>
     </div>
   </div>
 </template>
