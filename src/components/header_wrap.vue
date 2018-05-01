@@ -6,7 +6,14 @@
             <li class="path" :class="{'path_selected' : $route.path.match(/artwork/i)}" @click="go('/artworkslist')">ARTWORKS</li>
         </ul>
         <span v-show="!username" class="login" @click="login">登录</span>
-        <span v-show="username" class="login" @click="go('/user')">{{username}}</span>
+        <span v-show="username" class="login_success">
+            <span>Hi!~ {{username}}</span>
+            <img :src="photo" alt="">
+            <div class="list_box">
+                <p @click="go('/user')">个人主页</p>
+                <p @click="logout">退出登录</p>
+            </div>
+        </span>
         <dialog-wrap
             :closeState="showLogin"
             @toggle="close">
@@ -24,7 +31,8 @@ export default {
     return {
         showLogin: false,
         hasLogin: false,
-        username: ''
+        username: '',
+        photo: ''
     }
   },
   components: {
@@ -38,12 +46,32 @@ export default {
     login () {
         this.showLogin = true
     },
-    go (path) {
-        this.$router.push(path)
+    logout () {
+        this.$ajax.post('/api/logout')
+            .then(res => {
+                // this.$router.push('/')
+                window.location.href = "/"
+            })
     },
-    loginSuccess (value) {
+    go (path) {
+        if(path != '/artworkslist'){
+            this.$router.push(path)
+        }else{
+            this.$ajax.get('/api/auth')
+                .then(res => {
+                    if(res.data.status && res.data.status == 1){
+                        // 未登录
+                        this.showLogin = true
+                    }else{
+                        this.$router.push(path)
+                    }
+                })
+        }
+    },
+    loginSuccess (value, value2) {
         this.showLogin = false
         this.username = value
+        this.photo = value2
         // console.log(value)
     }
   },
@@ -52,11 +80,14 @@ export default {
         .then(res => {
             if(res.data.status && res.data.status == 1){
                 // 未登录
+                if(this.$route.path != '/'){
+                    this.showLogin = true
+                }
             }else{
                 window.username = res.data.username
                 window.avator = res.data.avator
                 this.username = res.data.username
-                this.loginSuccess(this.username)
+                this.loginSuccess(this.username, window.avator)
             }
         })
   }
@@ -71,7 +102,7 @@ export default {
     top: 0;
     z-index: 50;
     user-select:none;
-    box-shadow: darkgrey 0 3px 10px;//边框阴影
+    box-shadow: rgba(0, 0, 0, .14) 0 2px 4px;//边框阴影
     .logo{
         cursor: pointer;
         vertical-align: top;
@@ -123,6 +154,51 @@ export default {
         background-color: #222;
         color: #fff;
         font-size: 20px;
+        // font-family: SourceHanSans;
+    }
+    .login_success{
+        position: absolute;
+        // cursor: pointer;
+        right: 60px;
+        top: 12px;
+        vertical-align: middle;
+        display: inline-block;
+        height: 56px;
+        line-height: 56px;
+        text-align: left;
+        color: #242424;
+        font-size: 22px;
+        span{
+            vertical-align: top;
+            display: inline-block;
+            line-height: 56px;
+        }
+        img{
+            height: 56px;
+            width: 56px;
+        }
+        &:hover{
+            .list_box{
+                display: block;
+            }
+        }
+        .list_box{
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 60px;
+            width: 130px;
+            height: 93px;
+            padding: 14px 0 9px 5px;
+            background-image: url(../assets/img/group.png);
+            p{
+                cursor: pointer;
+                text-align: center;
+                line-height: 46px;
+                font-size: 16px;
+                color: #242424;
+            }
+        }
         // font-family: SourceHanSans;
     }
 }

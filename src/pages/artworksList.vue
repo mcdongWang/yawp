@@ -28,7 +28,6 @@ export default {
         getList () {
             this.$ajax.get('/api/galerry')
             .then(response => {
-                console.log(response.data)
                 this.artworkList = response.data.data
             })
             .catch(error => {
@@ -61,7 +60,7 @@ export default {
         width: 100%;
         text-align: center;
         height: 240px;
-        background-color: #b9b9b9;
+        // background-color: #b9b9b9;
         position: relative;
         .artwork-img{
             position:absolute;

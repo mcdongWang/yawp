@@ -26,7 +26,20 @@ export default {
   },
   methods: {
     closeWrap () {
-        this.$emit('toggle', false)
+        this.$ajax.get('/api/auth')
+            .then(res => {
+                if(res.data.status && res.data.status == 1){
+                    // 未登录
+                    if(this.$route.path != '/'){
+                        this.$router.push('/')
+                        this.$emit('toggle', false)
+                    }else{
+                        this.$emit('toggle', false)
+                    }
+                }else{
+                    this.$emit('toggle', false)
+                }
+            })
     }
   },
   props: ['closeState']

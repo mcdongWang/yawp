@@ -101,6 +101,7 @@ export default {
         // display: inline-block;
     }
     .form_title{
+        font-weight: bold;
         font-size: 40px;
     }
     .form_info{

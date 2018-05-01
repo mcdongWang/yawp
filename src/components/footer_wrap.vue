@@ -3,7 +3,7 @@
         <div class="content">
             <div class="left">
                 <img src="../assets/img/logo.png" alt="">
-                <p class="copy">&copy; 2018 北京呀普科技有限公司</p>
+                <p class="copy">&copy; 2018 呐喊青年（北京）科技文化有限公司</p>
             </div>
             <div class="right">
                 <ul>

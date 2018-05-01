@@ -88,7 +88,6 @@ export default {
         getList () {
             this.$ajax.get('/api/home')
             .then(response => {
-                console.log(response.data.artworks)
                 this.projectsList = response.data.projects
                 this.artworksList = response.data.artworks
             })
