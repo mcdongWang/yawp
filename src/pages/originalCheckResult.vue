@@ -1,13 +1,15 @@
 <template>
   <div class="original-check-result">
-    <img :src="artInfo.path" alt="" class="artwork-img">
+    <div class="artwork-img-wrap">
+        <img :src="artInfo.path" alt="" class="artwork-img">
+    </div>
     <span class="img-block">BlockChain ID：{{artInfo.assetID}}</span>
     <span class="img-createDate">区块链创建时间：{{artInfo.createTime}}</span>
     <div class="info-box">
         <div class="artwork-info">
             <div class="info-title">
-                <span class="title">{{artInfo.name}}</span>
-                <span class="artist">{{artInfo.author}}</span>
+                <p class="title">{{artInfo.name}}</p>
+                <p class="artist">{{artInfo.author}}</p>
             </div>
             <span class="content">{{artInfo.comment}}</span>
         </div>
@@ -53,9 +55,16 @@ export default {
 .original-check-result{
     font-size: 0px;
     vertical-align: top;
-    .artwork-img{
+    .artwork-img-wrap{
         width: 100%;
+        height: 400px;
         margin-top: 120px;
+        text-align: center;
+        .artwork-img{
+            display: inline-block;
+            max-width: 100%;
+            max-height: 100%;
+        }
     }
     .img-block, .img-createDate, .img-block-p{
         font-size: 14px;
@@ -109,18 +118,18 @@ export default {
     }
     .title{
         font-size: 48px;
-        display: inline-block;
-        width: 80%;
+        // display: inline-block;
+        // width: 80%;
         overflow: hidden;
         text-overflow:ellipsis;
         white-space: nowrap;
     }
     .artist{
-        display: inline-block;
-        width: 20%;
-        text-align: right;
+        // display: inline-block;
+        // width: 20%;
+        text-align: left;
         font-size: 22px;
-        margin-top: 26px;
+        margin-top: 20px;
     }
     .content{
         display: block;

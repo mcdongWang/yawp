@@ -6,8 +6,8 @@
     <div class="info-box">
         <div class="artwork-info">
             <div class="info-title">
-                <span class="title">{{artworkInfo.name}}</span>
-                <span class="artist">{{artworkInfo.author}}</span>
+                <p class="title">{{artworkInfo.name}}</p>
+                <p class="artist">{{artworkInfo.author}}</p>
             </div>
             <span class="content">{{artworkInfo.comment}}</span>
         </div>
@@ -99,18 +99,18 @@ export default {
     }
     .title{
         font-size: 48px;
-        display: inline-block;
-        width: 80%;
+        // display: inline-block;
+        // width: 80%;
         overflow: hidden;
         text-overflow:ellipsis;
         white-space: nowrap;
     }
     .artist{
-        display: inline-block;
-        width: 20%;
-        text-align: right;
+        // display: inline-block;
+        // width: 20%;
+        text-align: left;
         font-size: 22px;
-        margin-top: 26px;
+        margin-top: 20px;
     }
     .content{
         display: block;
