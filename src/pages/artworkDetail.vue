@@ -1,6 +1,8 @@
 <template>
   <div class="artwork-detail">
-    <img :src="artworkInfo.path" alt="" class="artwork-img">
+    <div class="artwork-img-wrap">
+        <img :src="artworkInfo.path" alt="" class="artwork-img">
+    </div>
     <div class="info-box">
         <div class="artwork-info">
             <div class="info-title">
@@ -69,11 +71,17 @@ export default {
     margin: 0 auto;
     color: #222;
 }
-.artwork-img{
-    display: inline-block;
+.artwork-img-wrap{
     width: 100%;
+    height: 400px;
     margin-top: 60px;
     margin-bottom: 80px;
+    text-align: center;
+    .artwork-img{
+        display: inline-block;
+        max-width: 100%;
+        max-height: 100%;
+    }
 }
 .info-box{
     padding-bottom: 40px;

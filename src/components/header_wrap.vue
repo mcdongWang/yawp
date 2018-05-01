@@ -1,6 +1,14 @@
 <template>
     <div class="wrap">
-        <img @click="go('/')" src="../assets/img/logo.png" height="36" width="128" class="logo"></img>
+        <router-link to="/">
+            <img
+                @click="go('/')"
+                src="../assets/img/logo.png"
+                height="36"
+                width="128"
+                class="logo">
+            </img>
+        </router-link>
         <ul class="path_list">
             <li class="path" :class="{'path_selected' : $route.path == '/'}"@click="go('/')">OUR PROJECT</li>
             <li class="path" :class="{'path_selected' : $route.path.match(/artwork/i)}" @click="go('/artworkslist')">ARTWORKS</li>
